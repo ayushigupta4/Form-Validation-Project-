@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>From validation system</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <style>
+            body{
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 130%;
+            }
+            .wrapper{
+                width: 550px;
+                margin: 0 auto;
+            }
+            label{
+                width: 200px;
+                float: left;
+                position: relative;
+                top: 12px;
+            }
+            input{
+                width: 230px;
+                font-size: 25px;
+                border: 1px solid black;
+                border-radius: 10px;
+                padding: 5px 5px 12px 5px;
+            }
+            .formelement{
+                margin-bottom: 10px;
+            }
+            #submitbutton{
+                width: 130px;
+                margin-left: 200px;
+            }
+            #errors{
+                color: crimson;
+                font-size: 90%;
+                
+            }
+            #success{
+                color: green;
+                font-size: 90%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="errors"></div>
+        <div id="success"></div>
+       
+        <div class="wrapper">
+            <div class="formelement">
+                <label for="Email">Email</label>
+                <input type="text" name="Email" id="Email">
+            </div>
+            <div class="formelement">
+                <label for="phoneno">Phone Number</label>
+                <input type="text" name="phoneno" id="phoneno">
+            </div>
+            <div class="formelement">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div class="formelement">
+                <label for="confirmpassword">Confirm-Password</label>
+                <input type="password" name="confirmpassword" id="confirmpassword">
+            </div>
+            <input id="submitbutton" type="submit">
+            
+        </div>
+
+        <script>
+            var errormessage="";
+            var missingfield="";
+
+            function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+            }
+
+            $("#submitbutton").click(function(){
+
+                $("#errors").html("");
+                $("#success").html("");
+
+                if( $("#Email").val() == ""){
+                    missingfield += "<p>Email cannot be blank</p>";
+                }
+                if( $("#phoneno").val() == ""){
+                    missingfield += "<p>Phone no. cannot be blank</p>";
+                }
+                if( $("#password").val() == ""){
+                    missingfield += "<p>Password cannot be blank</p>";
+                }
+                if(isEmail($("#Email").val()) == false){
+                    errormessage += "<p>Email id is invalid</p>";
+                }
+                if($.isNumeric($("#phoneno").val()) == false){
+                    errormessage += "<p>Phone no. is invalid</p>";
+                }
+                if($("#password").val() != $("#confirmpassword").val()){
+                    errormessage += "<p>Password does not match</p>";
+                }
+                if(errormessage == ""){
+                    $("#success").html("You're registered");
+                }
+                else{
+                    $("#errors").html(errormessage + missingfield);
+                    errormessage = "";
+                    missingfield = "";
+                }
+            });
+
+            //$("#errors").html(errormessage + missingfield);
+        </script>
+    </body>
+</html>
